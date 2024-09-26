@@ -1,0 +1,200 @@
+<section style="min-height: 50vh; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;">
+  <div class="row w-100">
+    <div class="col-md-6 m-auto">
+      <!-- Logo Image -->
+      <div class="text-center mb-4">
+        <img src="/images/logo.png" alt="Logo" class="img-fluid" style="max-width: 150px;">
+      </div>
+      <div class="container p-5" style="background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h2 class="text-center mb-4" style="font-weight: 600; color: #343a40;">Admin Login</h2>
+        
+        <!-- Admin Login Form -->
+        <form action="/admin/login" method="POST">
+          <!-- Display error message if login fails -->
+          {{#if loginErr}}
+            <p class="error text-center" style="color: red;">{{loginErr}}</p>
+          {{/if}}
+
+          <!-- Email input -->
+          <div class="form-group">
+            <label for="Email" style="font-weight: 500;">Email Address</label>
+            <input type="email" class="form-control" name="Email" placeholder="Enter Email" required style="border: 2px solid #ced4da; border-radius: 5px; padding: 10px;">
+          </div>
+
+          <div class="form-group">
+              <label>Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" name="Password" id="loginPassword" placeholder="Enter Password" required>
+                <div class="input-group-append">
+                  <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('loginPassword')">
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+          <!-- Submit button -->
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary" style="padding: 10px 20px; font-weight: 500;">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Include Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+  // Toggle password visibility function
+function togglePasswordVisibility(inputId) {
+    const passwordInput = document.getElementById(inputId);
+    const icon = passwordInput.nextElementSibling.querySelector('i');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
+
+<style>
+ /* Styles for the toggle password visibility icon inside the input */
+.input-group-text {
+    cursor: pointer;
+    background-color: #fff;
+    border-left: none;
+}
+
+.input-group .form-control {
+    border-right: none;
+}
+
+
+/* Container Styles */
+section {
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #ccc7bf;
+    animation: gradientShift 10s ease infinite;
+    padding: 20px;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.card {
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.6s ease-out;
+    transform: translateY(30px);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    color: #388E3C;
+    animation: fadeIn 1s ease-in-out forwards;
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.4);
+    outline: none;
+    transform: scale(1.02);
+}
+
+.btn-primary {
+    background: #4CAF50;
+    border: none;
+    transition: background 0.4s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #388E3C;
+    transform: translateY(-2px);
+}
+
+a {
+    color: #388E3C;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4CAF50;
+    text-decoration: underline;
+}
+
+/* Logo Animation */
+.img-fluid {
+    animation: zoomIn 1.2s ease forwards;
+    transform: scale(0.8);
+    opacity: 0;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+/* Animations */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+</style>

@@ -1,0 +1,189 @@
+<section>
+    <div class="container mt-4">
+        <div class="row justify-content-start mb-3">
+            <div class="col-md-2">
+                <a href="/admin" class="btn btn-outline-success back-button">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4 animated-title">Add Product</h2>
+                <form action="/admin/add-product" method="POST" enctype="multipart/form-data" class="p-4 colorful-form">
+                    <div class="form-group">
+                        <label for="productName" class="animated-label">Name</label>
+                        <input type="text" name="Name" class="form-control animated-input" required>
+                    </div>
+
+                    <!-- Category Dropdown -->
+                    <div class="form-group">
+                        <label for="productCategory" class="animated-label">Category</label>
+                        <select name="Category" class="form-control animated-input" required style="height: 40px;">
+                            <option value="" disabled selected>Select Category</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Watches">Watches</option>
+                            <option value="Men's Wear">Men's Wear</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice" class="animated-label">Price</label>
+                        <input type="text" name="Price" class="form-control animated-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productImage" class="animated-label">Image</label><br>
+                        <img src="/product-images/{{product._id}}.jpg" alt="Product Image" id="imgView" class="animated-img img-preview mb-2" style="height: 200px; width:200px">
+                        <input type="file" name="Image" class="form-control animated-input" onchange="viewImage(event)" style="height: 50px;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-block animated-button">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+  /* General Container Styling */
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 4px 20px rgba(0, 128, 0, 0.2);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animated Title */
+.animated-title {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: slideIn 1s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #008000;
+  padding-bottom: 5px;
+}
+
+/* Input Styles */
+.animated-input {
+  border: 1px solid #008000;
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.animated-input:focus {
+  outline: none;
+  border-color: white;
+  background-color: green;
+  color: white;
+  animation: pulse 0.6s infinite;
+}
+
+.animated-label {
+  color: green;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  transition: color 0.3s;
+}
+
+.animated-label:hover {
+  color: #004d00;
+}
+
+/* Button Styles */
+.animated-button {
+  background-color: green;
+  color: white;
+  transition: 0.3s;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0px 4px 10px rgba(0, 128, 0, 0.5);
+  text-transform: uppercase;
+}
+
+.animated-button:hover {
+  background-color: white;
+  color: green;
+  border: 2px solid green;
+  box-shadow: 0px 6px 15px rgba(0, 128, 0, 0.6);
+  transform: scale(1.05);
+}
+
+/* Back Button Styling */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-button i {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.back-button:hover {
+    background-color: green;
+    color: white;
+    transform: translateX(-2px);
+}
+
+
+/* Image Styles */
+.animated-img {
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 5px;
+  transition: transform 0.3s;
+}
+
+.animated-img:hover {
+  transform: scale(1.05);
+}
+
+/* Keyframe Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(0, 128, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.7);
+  }
+}
+</style>
+
+<script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>

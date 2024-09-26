@@ -1,0 +1,114 @@
+<section>
+    <div class="container">
+        {{#if products.length}}
+        <!-- Cart table if products are present -->
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td><img src="/product-images/{{this.product._id}}.jpg" alt="" style="width: 70px; height:70px"></td>
+                    <td>{{this.product.Name}}</td>
+                    <td>₹{{this.product.Price}}</td>
+                    <td>
+                        {{#if (gt this.quantity 1)}}
+                            <button class="btn btn-secondary cart-item-count mr-3" onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1, {{this.quantity}})">-</button>
+                        {{else}}
+                            <button class="btn btn-secondary cart-item-count mr-3" onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1, {{this.quantity}})">-</button>
+                        {{/if}}
+                        {{this.quantity}}
+                        <button class="btn btn-secondary cart-item-count ml-3" onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', 1, {{this.quantity}})">+</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removeItem('{{this._id}}', '{{this.product._id}}')">Remove</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <hr>
+        <div class="float-right pr-5">
+            <h3 class="float-right mr-5 mt-4 total-amount">Total: ₹{{total}}</h3> <!-- Use dynamic total -->
+            <a href="/place-order" class="btn btn-success mt-3" style="width: 100%;">Place Order</a>
+        </div>
+        {{else}}
+        <!-- If the cart is empty -->
+        <div class="empty-cart-container text-center mt-5">
+            <img src="/images/card.png" alt="Empty Cart" style="width: 200px; height: 200px;">
+            <h2 class="mt-4">Your Cart is Empty!</h2>
+            <p class="lead">Looks like you haven’t added anything to your cart yet.</p>
+            <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+        </div>
+        {{/if}}
+    </div>
+</section>
+
+<script>
+    function changeQuantity(cartId, proId, count, quantity) {
+        if (quantity === 1 && count === -1) {
+            if (confirm("Do you want to remove the product from the cart?")) {
+                removeItem(cartId, proId); // Call the remove function if the quantity is 1 and the user clicks minus
+                return;
+            }
+        }
+
+        $.ajax({
+            url: '/change-product-quantity',
+            data: {
+                cart: cartId,
+                product: proId,
+                count: count
+            },
+            method: 'POST',
+            success: (response) => {
+                if(response.status){
+                    updateTotalAmount(); // Call function to update the total amount
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert('Error updating quantity');
+                }
+            }
+        });
+    }
+
+    function updateTotalAmount() {
+        $.ajax({
+            url: '/get-total-amount', // New route to get the total amount
+            method: 'GET',
+            success: (response) => {
+                if (response.status) {
+                    // Update the total in the cart view
+                    $('.total-amount').text(`Total: ₹${response.total}`);
+                } else {
+                    alert('Error fetching total amount');
+                }
+            }
+        });
+    }
+
+    function removeItem(cartId, proId) {
+        $.ajax({
+            url: '/remove-cart-item',
+            data: {
+                cart: cartId,
+                product: proId
+            },
+            method: 'POST',
+            success: (response) => {
+                if(response.status){
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert('Error removing item');
+                }
+            }
+        });
+    }
+</script>

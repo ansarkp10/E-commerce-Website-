@@ -1,0 +1,43 @@
+<section>
+    <div class="container mt-5">
+        <h2>Order Details</h2>
+
+        <!-- User Information -->
+        <div class="mb-4">
+            <h4>User: {{user.Name}}</h4>
+            <p>Email: {{user.Email}}</p>
+        </div>
+
+        <!-- Ordered Products Table -->
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{product.Name}}</td> 
+                    <td>{{quantity}}</td>
+                    <td>₹{{product.Price}}</td> 
+                    <td>₹{{multiply product.Price quantity}}</td> <!-- Multiply helper to calculate total -->
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <!-- Total Amount -->
+        <div class="float-right">
+            <h4>Total: ₹{{totalPrice products}}</h4> <!-- Use a helper for totalPrice calculation -->
+        </div>
+
+        <a href="/orders" class="btn btn-primary mt-3">Back to Orders</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</section>

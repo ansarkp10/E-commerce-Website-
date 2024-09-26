@@ -1,0 +1,194 @@
+<section>
+    <div class="container mt-5">
+        <!-- Search Bar -->
+        <div class="search-bar mb-4">
+            <input type="text" id="search-input" class="form-control" placeholder="Search for products..." onkeyup="searchProducts()">
+        </div>
+
+        <!-- Mobile Category -->
+        <h2 class="category-title">Mobile</h2>
+        <div class="row" id="mobile-products">
+            {{#each products}}
+            {{#if (eq this.Category 'Mobile')}}
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3 product-item" data-name="{{this.Name}}">
+                <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                    <img class="card-img-top rounded-top" src="/product-images/{{this._id}}.jpg" alt="{{this.Name}}" style="height: 200px; width:200px">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{this.Name}}</h5>
+                        <p class="card-text font-weight-bold text-primary">₹{{this.Price}}</p>
+                        <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Repeat the same for other categories -->
+        <h2 class="category-title">Electronics</h2>
+        <div class="row" id="electronics-products">
+            {{#each products}}
+            {{#if (eq this.Category 'Electronics')}}
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3 product-item" data-name="{{this.Name}}">
+                <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                    <img class="card-img-top rounded-top" src="/product-images/{{this._id}}.jpg" alt="{{this.Name}}" style="height: 250px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{this.Name}}</h5>
+                        <p class="card-text font-weight-bold text-primary">₹{{this.Price}}</p>
+                        <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+        
+        <!-- Watches Category -->
+        <h2 class="category-title">Watches</h2>
+        <div class="row" id="watches-products">
+            {{#each products}}
+            {{#if (eq this.Category 'Watches')}}
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3 product-item" data-name="{{this.Name}}">
+                <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                    <img class="card-img-top rounded-top" src="/product-images/{{this._id}}.jpg" alt="{{this.Name}}" style="height: 250px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{this.Name}}</h5>
+                        <p class="card-text font-weight-bold text-primary">₹{{this.Price}}</p>
+                        <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Men's Wear Category -->
+        <h2 class="category-title">Men's Wear</h2>
+        <div class="row" id="menswear-products">
+            {{#each products}}
+            {{#if (eq this.Category 'Men\'s Wear')}}
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3 product-item" data-name="{{this.Name}}">
+                <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                    <img class="card-img-top rounded-top" src="/product-images/{{this._id}}.jpg" alt="{{this.Name}}" style="height: 250px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{this.Name}}</h5>
+                        <p class="card-text font-weight-bold text-primary">₹{{this.Price}}</p>
+                        <button onclick="addToCart('{{this._id}}')" class="btn btn-outline-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<script>
+    function searchProducts() {
+        const input = document.getElementById('search-input').value.toLowerCase();
+        const productItems = document.querySelectorAll('.product-item');
+
+        // Reset visibility for all products
+        productItems.forEach(item => {
+            const productName = item.getAttribute('data-name').toLowerCase();
+            if (productName.includes(input)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Show or hide categories based on products visibility
+        const categories = document.querySelectorAll('.category-title');
+        categories.forEach(category => {
+            const productList = category.nextElementSibling;
+            const visibleItems = productList.querySelectorAll('.product-item[style*="display: block"]');
+            
+            // Show category title if there are visible items, else hide it
+            if (visibleItems.length > 0) {
+                category.style.display = 'block';
+                productList.style.display = 'flex';
+            } else {
+                category.style.display = 'none';
+                productList.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<style>
+    /* Search Bar Styling */
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .search-bar input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        border: 2px solid #a5a58d;
+        border-radius: 25px;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+        font-size: 17px;
+    }
+
+    .search-bar input[type="text"]:focus {
+        border-color: #66bb6a;
+        box-shadow: 0px 0px 10px rgba(102, 187, 106, 0.3);
+    }
+
+    .search-bar input[type="text"]::placeholder {
+        color: #3c3a3a;
+        font-style: italic;
+    }
+
+    .category-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #007bff;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-img-top {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .btn-outline-primary {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        border-radius: 20px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>

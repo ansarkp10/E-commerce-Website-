@@ -1,0 +1,156 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">AK Shopping Cart</a>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Products <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart <span class="badge badge-success" id="cart-count">{{cartCount}}</span></a>
+                </li>
+                {{#if user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+                {{/if}}
+            </ul>
+
+            <!-- User Dropdown Menu -->
+            {{#if (not isProfilePage)}}
+            <div class="dropdown ml-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{#if user}}
+                    <img src="{{user.profilePhoto}}" alt="Profile Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">
+                    {{user.Name}}
+                    {{else}}
+                    Account
+                    {{/if}}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    {{#if user}}
+                    
+                    <a class="dropdown-item" href="/profile">Profile</a>
+                    
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    {{else}}
+                    <a class="dropdown-item" href="/login">Login</a>
+                    {{/if}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- Notification Icon -->
+            {{#if user}}
+            <div class="ml-3">
+                <a href="/notifications" class="btn btn-light position-relative">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge badge-danger position-absolute top-0 start-100 translate-middle" id="notification-count">3</span>
+                </a>
+            </div>
+            {{/if}}
+        </div>
+    </nav>
+</header>
+
+<style>
+    /* Dropdown Menu Styles */
+.dropdown-menu {
+    background-color: #ffffff; /* Background color of the dropdown */
+    border: 1px solid #e5e5e5; /* Border around the dropdown */
+    border-radius: 0.25rem; /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    padding: 0.5rem 0; /* Padding inside the dropdown */
+    min-width: 160px; /* Minimum width for the dropdown */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    z-index: 1050;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Dropdown Items Styles */
+.dropdown-item {
+    padding: 0.5rem 1.25rem; /* Padding for each item */
+    color: #333; /* Text color */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Block-level display */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+    font-size: 0.9rem; /* Font size */
+    cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #007bff; /* Background color on hover */
+    color: #ffffff; /* Text color on hover */
+}
+
+.dropdown-item.active {
+    background-color: #007bff; /* Active background color */
+    color: #ffffff; /* Active text color */
+}
+
+/* Divider Line */
+.dropdown-divider {
+    height: 1px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    background-color: #e5e5e5; /* Color of divider line */
+}
+
+    /* Adjust navbar height and spacing */
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    .dropdown-menu {
+        min-width: 180px;
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .form-inline .form-control {
+        width: 200px;
+        transition: width 0.3s;
+    }
+
+    .form-inline .form-control:focus {
+        width: 300px;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    .position-relative {
+        display: inline-block;
+    }
+
+    .position-absolute {
+        top: -10px;
+        right: -10px;
+    }
+
+    #notification-count {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+</style>
